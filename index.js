@@ -168,30 +168,57 @@ const promptEngineer = () =>
         }
     })
 
-async function generateHTML() {
+const getHTMLModule = (file) => {
+    return readFile(file, 'utf8')
+}
+
+async function endPrompt() {
+    console.log(teamArray)
     let Template = {
         Main: await getHTMLModule('./src/main.html'),
         Manager: await getHTMLModule('./src/manager.html'),
         Engineer: await getHTMLModule('./src/engineer.html'),
         Intern: await getHTMLModule('./src/intern.html')
     }
-}
 
-const endPrompt = () => {
-    console.log(teamArray)
-    for (let employee of teamArray){
-        let html = Template
+    let teamHTML = ''
+
+    for (let employee of teamArray) {
+        let html = Template[employee.constructor.name]
+        .replace(/{% name %}/gi, employee.name)
+        .replace(/{% id %}/gi, employee.id)
+        .replace(/{% email %}/gi, employee.email)
+        switch(employee.constructor.name) {
+            case 'Manager':
+                html = html.replace(/{% officeNumber %}/gi, employee.officeNumber)
+                break
+            case 'Engineer':
+                html = html.replace(/{% githubUsername %}/gi, employee.githubUsername)
+                break
+            case 'Intern':
+                html = html.replace(/{% school %}/gi, employee.school)
+                break
+        }
+        teamHTML += html
     }
-    const generateHTML = () =>
-`${teamArray[0].name}`
-
-    const write = (answer) => {
-        writeFile('./dist/index.html', generateHTML(answer))
+    async function write(html) {
+        let file = `team.html`
+        let dir = './dist'
+        if(!fs.existsSync(dir)){
+            fs.mkdirSync(dir)
+        }
+        await writeFile(`${dir}/${file}`, html)
         .then(() => console.log('Success!'))
         .catch((err) => console.error(err))
+        return
     }
-    write()
+
+    let finalHTML = Template['Main'].replace(/{% employees %}/gi, teamHTML)
+    write(finalHTML)
 }
+    
+
+
 
 
 promptManager()
