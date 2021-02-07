@@ -1,5 +1,5 @@
 const fs = require('fs')
-//const PromptUser = require("../index.js")
+const jest = require('jest')
 
 jest.mock('fs')
 
