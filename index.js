@@ -216,9 +216,4 @@ async function endPrompt() {
     let finalHTML = Template['Main'].replace(/{% employees %}/gi, teamHTML)
     write(finalHTML)
 }
-    
-
-
-
-
 promptManager()
