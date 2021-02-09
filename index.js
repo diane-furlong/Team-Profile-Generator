@@ -56,7 +56,6 @@ const promptManager = () =>
     .then(function(answer){
         const newManager = new Manager(answer.name, answer.id, answer.email, answer.officeNumber)
         teamArray.push(newManager)
-        console.log(teamArray)
         switch(answer.memberType){
             case 'Engineer':
                 promptEngineer()
@@ -106,7 +105,6 @@ const promptEngineer = () =>
     .then(function(answer){
         const newEngineer = new Engineer(answer.name, answer.id, answer.email, answer.githubUsername)
         teamArray.push(newEngineer)
-        console.log(teamArray)
         switch(answer.memberType){
             case 'Engineer':
                 promptEngineer()
@@ -155,7 +153,6 @@ const promptEngineer = () =>
     .then(function(answer){
         const newIntern = new Intern(answer.name, answer.id, answer.email, answer.school)
         teamArray.push(newIntern)
-        console.log(teamArray)
         switch(answer.memberType){
             case 'Engineer':
                 promptEngineer()
@@ -173,7 +170,6 @@ const getHTMLModule = (file) => {
 }
 
 async function endPrompt() {
-    console.log(teamArray)
     let Template = {
         Main: await getHTMLModule('./src/main.html'),
         Manager: await getHTMLModule('./src/manager.html'),
