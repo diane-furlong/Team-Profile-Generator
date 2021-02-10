@@ -41,7 +41,7 @@ Contributions are welcome in the form of suggestions.
     
 ## Tests
     
-There are no tests for this application.
+This application uses jest npm to test the Employee.js, Engineer.js, Intern.js, and Manager.js files.
     
 ## License
 None
